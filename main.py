@@ -5,23 +5,7 @@ from skimage.filters import gaussian, median
 from skimage.metrics import normalized_root_mse
 import matplotlib.pyplot as plt
 
-def salt_and_pepper(obraz, procent):
-    return skimage.img_as_ubyte(skimage.util.random_noise(obraz, 's&p', amount=procent / 100))
-
-def gauss(obraz, s):
-    return skimage.img_as_ubyte(skimage.util.random_noise(obraz, var=s * s))
-
-def linear(obraz, h):
-    maska = np.random.uniform(-h, h, obraz.shape)
-    return np.clip(obraz + maska, 0, 255).astype(np.uint8)
-
-def calc_nmse(original_image, noised_image):
-    original_image = original_image.astype(np.float64)
-    noised_image = noised_image.astype(np.float64)
-    mse = np.sum(np.square(original_image - noised_image))
-    mse /= np.sum(np.square(original_image))
-    nmse = mse
-    return nmse
+from utils import salt_and_pepper, gauss, linear, calc_nmse
 
 image = skimage.data.camera()
 
